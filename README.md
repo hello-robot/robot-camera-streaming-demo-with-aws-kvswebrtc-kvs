@@ -11,16 +11,34 @@ Have an Ubuntu 18.04 machine with ROS Melodic installed and AWS credential setup
 * AWS_SECRET_ACCESS_KEY
 * AWS_SESSION_TOKEN (optional)
 
+### Create a new IAM user
 
-### Create kinesis video role.
+Create a new IAM user for your Stretch robot.
+1.  Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/
 
-Create a role with 'AmazonKinesisVideoStremsFullAccess' managed policy as shown in the image below. Name the role as `ec2_kinesis_video_role`
-![image](readmeimages/create_ec2_role.png)
+2. In the navigation panel, choose **Users** and then choose **Add users**.
 
+3. Type *Stretch* followed by its id number for the user name.  This is the sign-in name for AWS and will help keep track of your device in the AWS console.
 
-Edit the trust relationship by clicking the 'Trust relationships' tab under the Summary page of your role. Then click on the "Edit trust relationship" button to make the appropriate changes in the policy document. In the document, there is the Principal attribute and it indicates which other principals can assume the IAM role.  Here you include the AWS account number and user name. This is illustrated in line 7 in the image below. A user can modify the policy document for multiple principals allowing other accounts to assume the role.
+4. Select **Programmatic access** to create an access key for the stretch robot.
+![image](readmeimages/add_user_step_1.png)
 
-![image](readmeimages/edit_trust_policy.png)
+5. Click on **Next:Permissions**
+
+6. On the **Set permissions page**, select the **Attach existing policies directly** tab. In the search toolbar, type *kinesis* to see the list of policies that is relevant to KVS. Select the policy name, **AmazonKinesisVideoStreamsFullAccess**.
+![image](readmeimages/add_user_step_2.png)
+
+7. Click on **Next:Tags**. Currently, there is no need to attach a tag to this policy.
+
+8. Click on **Next:Review** to see all of the choices you made up to this point. When you are ready to proceed, choose **Create user**.
+
+9. Once the IAM user is added, the following page will provide you the robot's Access Key ID and Secret access key. To view the users' access keys (access key IDs and secret access keys), choose **Show** next to each password and access key that you want to see. To save the access keys, choose **Download .csv** and then save the file to a safe location.
+
+**IMPORTANT** This is your only opportunity to view or download the secret access keys, and you must provide this information to your users before they can use the AWS API. Save the user's new access key ID and secret access key in a safe and secure place. **You will not have access to the secret keys again after this step.**
+![image](readmeimages/add_user_step_3.png)
+
+For further information about creating an IAM user in your AWS account, please check out [Creating IAM users](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).
+
 
 ## Application setup
 
