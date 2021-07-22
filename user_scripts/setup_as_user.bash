@@ -1,34 +1,23 @@
 #!/bin/bash
 
-APP_DIRECTORY=/home/ubuntu/environment
+# pull directory of current folder.
+APP_DIRECTORY=/home/hello-robot/catkin_ws/src/robot-camera-streaming-demo-with-aws-kvswebrtc-kvs
 touch ~/.bash_aliases
-echo "source $APP_DIRECTORY/utility_bash_functions" >> ~/.bash_aliases
+echo "source $APP_DIRECTORY/user_scripts/utility_bash_functions" >> ~/.bash_aliases
 echo "source ~/.bash_aliases" >> ~/.bashrc
 # Setup sample ros application
 if [ -d $APP_DIRECTORY ]; then
     mkdir -p $APP_DIRECTORY
 fi
-cd $APP_DIRECTORY
-git clone https://github.com/aws-samples/multi-robot-fleet-sample-application.git
-cd $APP_DIRECTORY/multi-robot-fleet-sample-application/simulation_ws
-git checkout 270da92
-source /opt/ros/melodic/setup.sh
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bash_aliases
-rosws update
+
 
 # clone ros images to rtsp stream rospackage. This needs gstreamer plugins setup in root script
-git clone https://github.com/konduri/ros_rtsp.git  $APP_DIRECTORY/multi-robot-fleet-sample-application/simulation_ws/src/deps/ros_rtsp
+git clone https://github.com/konduri/ros_rtsp.git  $APP_DIRECTORY/deps/ros_rtsp
 
 # Install dependencies
 pip install roslibpy
-rosdep install --from-paths $APP_DIRECTORY/multi-robot-fleet-sample-application/simulation_ws/src -r -y --skip-keys roslibpy-pip
-catkin_make
-
-# Setup sourcing in the bash aliases
-source $APP_DIRECTORY/multi-robot-fleet-sample-application/simulation_ws/devel/setup.bash
-echo "source $APP_DIRECTORY/multi-robot-fleet-sample-application/simulation_ws/devel/setup.bash" >> ~/.bash_aliases
-
-
+# rosdep install --from-paths $APP_DIRECTORY/src -r -y --skip-keys roslibpy-pip
+# catkin_make
 
 ## Setup webrtc here
 cd $APP_DIRECTORY
