@@ -46,16 +46,21 @@ Clone this [repository](https://github.com/hello-robot/robot-camera-streaming-de
 
 ```
 cd /home/hello-robot/catkin_ws/src
-git clone https://github.com/hello-robot/robot-camera-streaming-demo-with-aws-kvswebrtc-kvs.git
+git clone https://github.com/hello-robot/stretch_robomaker_video_streaming.git
 ```
 
 Run the following command to install corresponding [libararies, software](setup_with_sudo.bash) and the [robot and kvs applications](user_scripts/setup_as_user.bash)
 ```
-cd robot-camera-streaming-demo-with-aws-kvswebrtc-kvs/user_scripts
+cd stretch_robomaker_video_streaming/user_scripts
 sudo bash setup_with_sudo.bash; bash setup_as_user.bash
 ```
 
-Once the above command is completed, change the sample application code present in the sample application source code present in your environment at the location `amazon-kinesis-video-streams-webrtc-sdk-c/samples/kvsWebRTCClientMasterGstreamerSample.c` on your environment
+Once the above command is completed, change the sample application code present in the sample application source code present in your environment. You can open the file with the following commands if you used the default setup
+
+```
+cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/amazon-kinesis-video-streams-webrtc-sdk-c/samples/
+gedit kvsWebRTCClientMasterGstreamerSample.c
+```
 
 The code is change is shown in before and after pictures below
 ![before_image](readmeimages/webrtc_before.png)
@@ -72,7 +77,12 @@ You can find the file with the code to copy [here](rtsp_command.txt) , with the 
 
 ## Update ROS RTSP Configuration File
 
-Edit the stream_setyp.yaml file to the appropriate camera topic that will be broadcasted. Simply change the source to match Stretch's camera plugin name, /camera/color/image_raw_upright_view.
+Edit the stream_setyp.yaml file to the appropriate camera topic that will be broadcasted.
+```
+cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/deps/ros_rtsp/config
+gedit stream_setup.yaml
+```
+Simply change the source to match Stretch's camera plugin name, **/camera/color/image_raw_upright_view**.
 
 ![image](readmeimages/modified_stream_setup.png)
 
@@ -89,7 +99,7 @@ In another terminal run the following launch file command
 ```
 roslaunch stretch_gazebo upright_camera_view.launch
 ```
-This should setup an rviz setup like the following ![image](readmeimages/rviz_bringup.png).
+This should setup an rviz setup like the image below. If the camera feed in the bottom left corner in the rviz window is not shown, simply click on the *Add* button and include the *Camera* to the display. You then select the same *Image Topic* you defined in RTSP configuration file. ![image](readmeimages/rviz_bringup.png).
 
 Run the following command in another terminal to provide a real-time video feed of the Stretch robot's camera.
 ```
@@ -105,8 +115,6 @@ Then in a separate terminal setup your credentials by running the following comm
 creds_from_default_file_stretch
 ```
 
-
-
 ### Launch Webrtc application
 
 Once the credentials are setup, you can setup the webrtc application by running the following *IN THE SAME TERMINAL WHERE YOU SETUP CREDENTIALS*
@@ -114,7 +122,7 @@ Once the credentials are setup, you can setup the webrtc application by running 
 # build code again since we modified it with new gst-pipeline
 
 echo "building webrtc code"
-APP_DIRECTORY=/home/hello-robot/catkin_ws/src/robot-camera-streaming-demo-with-aws-kvswebrtc-kvs
+APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
 mkdir $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build
 cd $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build
 cmake ..
@@ -137,13 +145,14 @@ sleep 3
 ```
 
 This will create a KVS webrtc connection between the robot and your browser. You can view it on the Console page by selecting the corresponding signaling channel clicking on Media playback viewer.
+
 ![kvs_webrc_image](readmeimages/webrtc.gif)
 
 ### Launch KVS video stream application
 Setup the KVS stream from the same terminal from which you have the credentials using the following commands
 ```
 # set env vars to recognize the kvs plugin
-APP_DIRECTORY=/home/hello-robot/catkin_ws/src/robot-camera-streaming-demo-with-aws-kvswebrtc-kvs
+APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
 export GST_PLUGIN_PATH=$GST_PLUGIN_PATH:$APP_DIRECTORY/amazon-kinesis-video-streams-producer-sdk-cpp/build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APP_DIRECTORY/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local/lib
 
@@ -166,4 +175,4 @@ All the commands for launching applications are available from this [file](user_
 
 ## Clean up
 
-You can kill the processes by running `Ctrl+C` on all the tabs. The webrtc process does not die untill the ROS application is killed.
+You can kill the processes by running `Ctrl+C` on all the tabs. The Webrtc process does not die untill the ROS application is killed.

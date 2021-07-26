@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # pull directory of current folder.
-APP_DIRECTORY=/home/hello-robot/catkin_ws/src/robot-camera-streaming-demo-with-aws-kvswebrtc-kvs
+APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
 touch ~/.bash_aliases
 echo "source $APP_DIRECTORY/user_scripts/utility_bash_functions" >> ~/.bash_aliases
 echo "source ~/.bash_aliases" >> ~/.bashrc
