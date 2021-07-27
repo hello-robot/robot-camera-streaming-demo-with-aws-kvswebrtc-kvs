@@ -97,7 +97,7 @@ roslaunch stretch_deep_perception stretch_detect_faces.launch
 
 In another terminal run the following launch file command
 ```
-roslaunch stretch_gazebo upright_camera_view.launch
+roslaunch stretch_core upright_camera_view.launch
 ```
 This should setup an rviz setup like the image below. If the camera feed in the bottom left corner in the rviz window is not shown, simply click on the *Add* button and include the *Camera* to the display. You then select the same *Image Topic* you defined in RTSP configuration file. ![image](readmeimages/rviz_bringup.png).
 
@@ -106,7 +106,7 @@ Run the following command in another terminal to provide a real-time video feed 
 roslaunch ros_rtsp rtsp_streams.launch
 ```
 ### Set AWS credentials
-Include your aws credentials (access key, secret access key, and default region) to the *creds_from_default_file_stretch()* function in the [utility_bash_function](utility_bash_functions) file.
+Include your aws credentials (access key, secret access key, and default region) to the *creds_from_default_file_stretch()* function in the [utility_bash_function](utility_bash_functions) file. This file is located in /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/user_scripts
 
 ![image](readmeimages/set_credentials.png)
 
