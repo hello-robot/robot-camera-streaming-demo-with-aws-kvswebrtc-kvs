@@ -49,7 +49,7 @@ cd /home/hello-robot/catkin_ws/src
 git clone https://github.com/hello-robot/stretch_robomaker_video_streaming.git
 ```
 
-Run the following command to install corresponding [libararies, software](setup_with_sudo.bash) and the [robot and kvs applications](user_scripts/setup_as_user.bash)
+Run the following command to install corresponding [libararies, software](setup_with_sudo.bash) and the [robot and kvs applications](user_scripts/setup_as_user.bash). This may take up to 15 minutes. 
 ```
 cd stretch_robomaker_video_streaming/user_scripts
 sudo bash setup_with_sudo.bash; bash setup_as_user.bash
