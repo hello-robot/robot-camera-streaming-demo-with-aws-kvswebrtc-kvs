@@ -14,9 +14,9 @@ build_and_run_webrtc_stretch() {
     cd $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build/samples
 
     echo "create signalling channel, in case it doesnt exist"
-    aws kinesisvideo create-signaling-channel --channel-name robot_webrtc_stream
+    aws kinesisvideo create-signaling-channel --channel-name stretch_webrtc_stream
     sleep 3
-    ./kvsWebrtcClientMasterGstSample robot_webrtc_stream
+    ./kvsWebrtcClientMasterGstSample stretch_webrtc_stream
 }
 
 
@@ -30,10 +30,10 @@ run_kinesis_stream_stretch() {
 
     # Make create stream api everytime for simplicity. It just fails if it already exists.
     echo "Creating a new stream if it doesnt exist"
-    aws kinesisvideo create-stream --stream-name "robot_kvs_stream_local_computer" --data-retention-in-hours "120"
+    aws kinesisvideo create-stream --stream-name "stretch_kvs_stream" --data-retention-in-hours "120"
     sleep 3
     echo "setting up kvs streaming"
-    gst-launch-1.0 -v rtspsrc location=rtsp://0.0.0.0:8554/back drop-on-latency=true use-pipeline-clock=true do-retransmission=false latency=0 ! rtph264depay ! h264parse ! kvssink stream-name="robot_kvs_stream_local_computer" storage-size=512 aws-region=$AWS_REGION
+    gst-launch-1.0 -v rtspsrc location=rtsp://0.0.0.0:8554/back drop-on-latency=true use-pipeline-clock=true do-retransmission=false latency=0 ! rtph264depay ! h264parse ! kvssink stream-name="stretch_kvs_stream" storage-size=512 aws-region=$AWS_REGION
 }
 
 
