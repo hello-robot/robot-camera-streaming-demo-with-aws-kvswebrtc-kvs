@@ -66,7 +66,7 @@ The code is change is shown in before and after pictures below
 ![before_image](readmeimages/webrtc_before.png)
 ![after_image](readmeimages/webrtc_after.png)
 
-You can find the file with the code to copy [here](rtsp_command.txt) , with the current code as
+You can find the file with the code to copy [here](user_scripts/rtsp_command.txt) , with the current code as
 ```
                 pipeline = gst_parse_launch(
                         "rtspsrc location=rtsp://0.0.0.0:8554/back short-header=TRUE ! rtph264depay ! "
