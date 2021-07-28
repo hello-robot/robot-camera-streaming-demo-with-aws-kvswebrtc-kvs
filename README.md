@@ -152,11 +152,11 @@ cd $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build/samples
 
 # Create signalling channel
 echo "create signalling channel, in case it doesnt exist"
-aws kinesisvideo create-signaling-channel --channel-name robot_webrtc_stream
+aws kinesisvideo create-signaling-channel --channel-name stretch_webrtc_stream
 sleep 3
 
 # Launch the application
-./kvsWebrtcClientMasterGstSample robot_webrtc_stream
+./kvsWebrtcClientMasterGstSample stretch_webrtc_stream
 ```
 
 This will create a KVS webrtc connection between the robot and your browser. You can view it on the Console page by selecting the corresponding signaling channel clicking on Media playback viewer.
@@ -175,10 +175,10 @@ export AWS_KVS_LOG_LEVEL=3
 
 # Make create stream api everytime for simplicity. It just fails if it already exists.
 echo "Creating a new stream if it doesnt exist"
-aws kinesisvideo create-stream --stream-name "robot_kvs_stream" --data-retention-in-hours "120"
+aws kinesisvideo create-stream --stream-name "stretch_kvs_stream" --data-retention-in-hours "120"
 sleep 3
 echo "setting up kvs streaming"
-gst-launch-1.0 -v rtspsrc location=rtsp://0.0.0.0:8554/back drop-on-latency=true use-pipeline-clock=true do-retransmission=false latency=0 ! rtph264depay ! h264parse ! kvssink stream-name="robot_kvs_stream" storage-size=512 aws-region=$AWS_REGION
+gst-launch-1.0 -v rtspsrc location=rtsp://0.0.0.0:8554/back drop-on-latency=true use-pipeline-clock=true do-retransmission=false latency=0 ! rtph264depay ! h264parse ! kvssink stream-name="stretch_kvs_stream" storage-size=512 aws-region=$AWS_REGION
 ```
 
 You can then view the current and historical data that is streamed from the robot on the AWS console by selecting the corresponding video stream on the kvs page, as shown in the gif below.
