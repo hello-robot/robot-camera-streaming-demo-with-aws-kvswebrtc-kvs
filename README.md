@@ -52,7 +52,8 @@ git clone https://github.com/hello-robot/stretch_robomaker_video_streaming.git
 Run the following command to install corresponding [libararies, software](setup_with_sudo.bash) and the [robot and kvs applications](user_scripts/setup_as_user.bash). This may take up to 15 minutes.
 ```
 cd stretch_robomaker_video_streaming/user_scripts
-sudo bash setup_with_sudo.bash; bash setup_as_user.bash
+sudo bash setup_with_sudo.bash
+sudo bash setup_as_user.bash
 ```
 
 Once the above command is completed, change the sample application code present in the sample application source code present in your environment. You can open the file with the following commands if you used the default setup
@@ -95,25 +96,39 @@ To Open a new terminal and run the following launch file command
 roslaunch stretch_deep_perception stretch_detect_faces.launch
 ```
 
-In another terminal run the following launch file command
+While the detect faces launch file is running, in another terminal run the following launch file command
 ```
 roslaunch stretch_core upright_camera_view.launch
 ```
 This should setup an rviz setup like the image below. If the camera feed in the bottom left corner in the rviz window is not shown, simply click on the *Add* button and include the *Camera* to the display. You then select the same *Image Topic* you defined in RTSP configuration file. ![image](readmeimages/rviz_bringup.png).
 
-Run the following command in another terminal to provide a real-time video feed of the Stretch robot's camera.
+Then run the following command in another terminal to provide a real-time video feed of the Stretch robot's camera.
 ```
 roslaunch ros_rtsp rtsp_streams.launch
 ```
 ### Set AWS credentials
-Include your aws credentials (access key, secret access key, and default region) to the *creds_from_default_file_stretch()* function in the [utility_bash_function](utility_bash_functions) file. This file is located in /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/user_scripts
+Include your aws credentials (access key, secret access key, and default region) to the *creds_from_default_file_stretch()* function in the [utility_bash_functions](utility_bash_functions) file. Make sure not to add a space between the ```=``` sign and aws credentials.
 
-![image](readmeimages/set_credentials.png)
+```
+cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/user_scripts
+gedit utility_bash_functions
+```
 
-Then in a separate terminal setup your credentials by running the following command.
+![image](readmeimages/pull_credentials.png)
+
+Then **open a new terminal window** (```ctrl``` + ```Alt``` + ```r```) to setup your credentials by running the following command.
 ```
 creds_from_default_file_stretch
 ```
+
+To make sure the credentials are set use the following command *IN THE SAME TERMINAL WHERE YOU SETUP CREDENTIALS*.
+```
+aws sts get-caller-identity
+```
+
+The IAM user account information should be displayed in the terminal.
+![image](readmeimages/get_caller_id.png)
+
 
 ### Launch Webrtc application
 
