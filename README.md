@@ -90,7 +90,7 @@ Simply change the source to match Stretch's camera plugin name, **/camera/color/
 ## Launch Applications
 
 ### Launch ROS Application
-To Open a new terminal and run the following launch file.
+Open a new terminal and run the following launch file.
 
 ```
 roslaunch stretch_deep_perception stretch_detect_faces.launch
