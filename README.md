@@ -76,7 +76,7 @@ You can find the file with the code to copy [here](user_scripts/rtsp_command.txt
                         &error);
 ```
 
-## Update ROS RTSP Configuration File
+### Update ROS RTSP Configuration File
 
 Edit the stream_setyp.yaml file to the appropriate camera topic that will be broadcasted.
 ```
@@ -108,7 +108,7 @@ Then run the following command in another terminal to provide a real-time video 
 roslaunch ros_rtsp rtsp_streams.launch
 ```
 
-## Troubleshooting
+### Troubleshooting
 A common error that arises running the ros_streams.launch file is that there is a failure to load the nodelet because the library coressponding to plugin *image2rtsp/Image2RTSPNodlet* can not be found. If this is the case, then the likely cause of this error is that the gstreamer libraries used by kvs and ros-rtsp were not properly installed. Simply type in the following commands
 
 ```
