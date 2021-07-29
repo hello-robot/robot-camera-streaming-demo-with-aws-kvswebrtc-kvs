@@ -56,14 +56,14 @@ sudo bash setup_with_sudo.bash
 sudo bash setup_as_user.bash
 ```
 
-Once the above command is completed, change the sample application code present in the sample application source code present in your environment. You can open the file with the following commands if you used the default setup
+Once the above command is completed, change the sample application code present in the sample application source code present in your environment. You can open the file with the following commands if you used the default setup.
 
 ```
 cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/amazon-kinesis-video-streams-webrtc-sdk-c/samples/
 gedit kvsWebRTCClientMasterGstreamerSample.c
 ```
 
-The code is change is shown in before and after pictures below
+The code change is shown in the before and after pictures below
 ![before_image](readmeimages/webrtc_before.png)
 ![after_image](readmeimages/webrtc_after.png)
 
@@ -90,38 +90,64 @@ Simply change the source to match Stretch's camera plugin name, **/camera/color/
 ## Launch Applications
 
 ### Launch ROS Application
-To Open a new terminal and run the following launch file command
+To Open a new terminal and run the following launch file.
 
 ```
 roslaunch stretch_deep_perception stretch_detect_faces.launch
 ```
 
-While the detect faces launch file is running, in another terminal run the following launch file command
+While the detect faces launch file is running, in another terminal run the following launch file command.
 ```
 roslaunch stretch_core upright_camera_view.launch
 ```
-This should setup an rviz setup like the image below. If the camera feed in the bottom left corner in the rviz window is not shown, simply click on the *Add* button and include the *Camera* to the display. You then select the same *Image Topic* you defined in RTSP configuration file. ![image](readmeimages/rviz_bringup.png).
+This should setup an rviz setup like the image below. If the camera feed in the bottom left corner in the rviz window is not shown, simply click on the *Add*  button and include the *Camera* to the display. You then select the same *Image Topic* you defined in RTSP configuration file.
+ ![image](readmeimages/rviz_bringup.png)
 
 Then run the following command in another terminal to provide a real-time video feed of the Stretch robot's camera.
 ```
 roslaunch ros_rtsp rtsp_streams.launch
 ```
+
+## Troubleshooting
+A common error that arises running the ros_streams.launch file is that there is a failure to load the nodelet because the library coressponding to plugin *image2rtsp/Image2RTSPNodlet* can not be found. If this is the case, then the likely cause of this error is that the gstreamer libraries used by kvs and ros-rtsp were not properly installed. Simply type in the following commands
+
+```
+sudo apt-get install -y libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev libgstrtspserver-1.0-dev
+
+sudo apt-get install -y libssl-dev libcurl4-openssl-dev liblog4cplus-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools
+```
+
+Then catkin_make your workspace. This should help fix the previous error in the ros_streams.launch file.
+
+```
+cd /home/hello-robot/catkin_ws
+catkin_make
+```
+
+
+
 ### Set AWS credentials
-Include your aws credentials (access key, secret access key, and default region) to the *creds_from_default_file_stretch()* function in the [utility_bash_functions](utility_bash_functions) file. Make sure not to add a space between the ```=``` sign and aws credentials.
+Include your aws credentials (access key, secret access key, and region) to the *creds_from_default_file_stretch()* function in the [utility_bash_functions](utility_bash_functions) file. Make sure not to add a space between the ```=``` sign and aws credentials.
 
 ```
 cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/user_scripts
 gedit utility_bash_functions
 ```
 
-![image](readmeimages/pull_credentials.png)
+![image](readmeimages/set_creds.png)
 
-Then **open a new terminal window** (```ctrl``` + ```Alt``` + ```r```) to setup your credentials by running the following command.
+Because the utility_bash_functions file was modified, you need to reload your .bashrc configuration with the following command.
+
+```
+source ~/.bashrc
+```
+
+Then setup your credentials by running the following command.
 ```
 creds_from_default_file_stretch
 ```
 
-To make sure the credentials are set use the following command *IN THE SAME TERMINAL WHERE YOU SETUP CREDENTIALS*.
+To make sure the credentials are set use the following *IN THE SAME TERMINAL WHERE YOU SETUP CREDENTIALS*.
 ```
 aws sts get-caller-identity
 ```
