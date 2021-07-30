@@ -46,12 +46,12 @@ Clone this [repository](https://github.com/hello-robot/robot-camera-streaming-de
 
 ```
 cd /home/hello-robot/catkin_ws/src
-git clone https://github.com/hello-robot/stretch_robomaker_video_streaming.git
+git clone https://github.com/hello-robot/stretch_aws_robotics_video_streaming.git
 ```
 
 Run the following command to install corresponding [libararies, software](setup_with_sudo.bash) and the [robot and kvs applications](user_scripts/setup_as_user.bash). This may take up to 15 minutes.
 ```
-cd stretch_robomaker_video_streaming/user_scripts
+cd stretch_aws_robotics_video_streaming/user_scripts
 sudo bash setup_with_sudo.bash
 sudo bash setup_as_user.bash
 ```
@@ -59,7 +59,7 @@ sudo bash setup_as_user.bash
 Once the above command is completed, change the sample application code present in the sample application source code present in your environment. You can open the file with the following commands if you used the default setup.
 
 ```
-cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/amazon-kinesis-video-streams-webrtc-sdk-c/samples/
+cd /home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming/amazon-kinesis-video-streams-webrtc-sdk-c/samples/
 gedit kvsWebRTCClientMasterGstreamerSample.c
 ```
 
@@ -80,7 +80,7 @@ You can find the file with the code to copy [here](user_scripts/rtsp_command.txt
 
 Edit the stream_setyp.yaml file to the appropriate camera topic that will be broadcasted.
 ```
-cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/deps/ros_rtsp/config
+cd /home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming/deps/ros_rtsp/config
 gedit stream_setup.yaml
 ```
 Simply change the source to match Stretch's camera plugin name, **/camera/color/image_raw_upright_view**.
@@ -130,7 +130,7 @@ catkin_make
 Include your aws credentials (access key, secret access key, and region) to the *creds_from_default_file_stretch()* function in the [utility_bash_functions](utility_bash_functions) file. Make sure not to add a space between the ```=``` sign and aws credentials.
 
 ```
-cd /home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming/user_scripts
+cd /home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming/user_scripts
 gedit utility_bash_functions
 ```
 
@@ -163,7 +163,7 @@ Once the credentials are setup, you can setup the webrtc application by running 
 # build code again since we modified it with new gst-pipeline
 
 echo "building webrtc code"
-APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
+APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming
 mkdir $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build
 cd $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build
 cmake ..
@@ -193,7 +193,7 @@ This will create a KVS webrtc connection between the robot and your browser. You
 Setup the KVS stream from the same terminal from which you have the credentials using the following commands
 ```
 # set env vars to recognize the kvs plugin
-APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
+APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming
 export GST_PLUGIN_PATH=$GST_PLUGIN_PATH:$APP_DIRECTORY/amazon-kinesis-video-streams-producer-sdk-cpp/build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APP_DIRECTORY/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local/lib
 

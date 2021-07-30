@@ -1,7 +1,7 @@
 build_and_run_webrtc_stretch() {
     # build code again
     echo "building webrtc code"
-    APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
+    APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming
     mkdir $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build
     cd $APP_DIRECTORY/amazon-kinesis-video-streams-webrtc-sdk-c/build
     cmake ..
@@ -22,7 +22,7 @@ build_and_run_webrtc_stretch() {
 
 run_kinesis_stream_stretch() {
     # set env vars to recognize the kvs plugin
-    APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_robomaker_video_streaming
+    APP_DIRECTORY=/home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming
     export GST_PLUGIN_PATH=$GST_PLUGIN_PATH:$APP_DIRECTORY/amazon-kinesis-video-streams-producer-sdk-cpp/build
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APP_DIRECTORY/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local/lib
 
