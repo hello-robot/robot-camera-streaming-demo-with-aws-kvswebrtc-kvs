@@ -127,7 +127,7 @@ catkin_make
 
 
 ### Set AWS credentials
-Include your aws credentials (access key, secret access key, and region) to the *creds_from_default_file_stretch()* function in the [utility_bash_functions](utility_bash_functions) file. Make sure not to add a space between the ```=``` sign and aws credentials.
+Include your aws credentials (access key, secret access key, and region) to the *creds_from_default_file_stretch()* function in the [utility_bash_functions](utility_bash_functions) file. Make sure **not** to add a space between the ```=``` sign and aws credentials.
 
 ```
 cd /home/hello-robot/catkin_ws/src/stretch_aws_robotics_video_streaming/user_scripts
